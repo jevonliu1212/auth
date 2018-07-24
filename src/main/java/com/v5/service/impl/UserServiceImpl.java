@@ -1,5 +1,6 @@
 package com.v5.service.impl;
 
+import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -39,6 +40,10 @@ public class UserServiceImpl implements UserService {
 		user.setPassword(pass);
 		user.setSalt(salt);
 		userMapper.insert(user);
+	}
+	public List<User> listUserByMobile(String mobile) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

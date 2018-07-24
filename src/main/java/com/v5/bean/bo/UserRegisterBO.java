@@ -22,6 +22,12 @@ public class UserRegisterBO {
 	 */
 	@NotBlank(message = "密码不能为空")
 	private String password;
+	
+	/**
+	 * 手机号
+	 */
+	@NotBlank(message = "手机号不能为空")
+	private String mobile;
 
 	/**
 	 * 邮箱
@@ -53,5 +59,14 @@ public class UserRegisterBO {
 		this.email = email;
 	}
 
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	
 
 }

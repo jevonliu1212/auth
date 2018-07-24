@@ -38,4 +38,10 @@ public class UserController {
 		userService.register(userRegisterBO);
 		return RestResponse.success();
 	}
+	
+	@RequestMapping(value = "/qqlogin",method = RequestMethod.GET)
+	public RestResponse qqlogin(){
+		System.out.println("qq login........");
+		return RestResponse.success();
+	}
 }

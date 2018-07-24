@@ -32,6 +32,11 @@ public class User {
 	 * ” œ‰
 	 */
 	private String email;
+	
+	/**
+	 *  ÷ª˙∫≈
+	 */
+	private String mobile;
 
 	/**
 	 * º”—Œ
@@ -78,4 +83,13 @@ public class User {
 		this.salt = salt;
 	}
 
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	
 }

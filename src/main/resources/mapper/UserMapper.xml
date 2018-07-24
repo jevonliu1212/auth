@@ -4,4 +4,12 @@
 <insert id ="insert" parameterType="com.v5.entity.User" >
   insert into user(user_name,password,salt,email) values(#{userName},#{password},#{salt},#{email});
 </insert>
+
+<select id="getById" resultType="com.v5.entity.User">
+  select * from user where id=#{id}
+</select>
+
+<select id="listByMobile" resultType="com.v5.entity.User">
+  select * from user where mobile = #{mobile}
+</select>
 </mapper>
