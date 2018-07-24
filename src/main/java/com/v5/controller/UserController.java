@@ -9,13 +9,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.v5.bean.bo.UserRegisterBO;
+import com.v5.bean.response.RestResponse;
 import com.v5.service.UserService;
 
 /**
- * ÓÃ»§Controller
+ * ï¿½Ã»ï¿½Controller
  *
  * @author Jevon
- * @time 2018Äê7ÔÂ23ÈÕ
+ * @time 2018ï¿½ï¿½7ï¿½ï¿½23ï¿½ï¿½
  * @copyright Jevon & Nate
  */
 @RestController
@@ -26,15 +27,15 @@ public class UserController {
 	private UserService userService;
 
 	/**
-	 * ÓÃ»§×¢²á
+	 * ï¿½Ã»ï¿½×¢ï¿½ï¿½
 	 *
 	 * @param userRegisterBO
 	 * @author Jevon
-	 * @time 2018Äê7ÔÂ23ÈÕ
+	 * @time 2018ï¿½ï¿½7ï¿½ï¿½23ï¿½ï¿½
 	 */
 	@RequestMapping(value = "/register",method = RequestMethod.POST)
-	public String register(@Validated @RequestBody UserRegisterBO userRegisterBO){
+	public RestResponse register(@Validated @RequestBody UserRegisterBO userRegisterBO){
 		userService.register(userRegisterBO);
-		return "success";
+		return RestResponse.success();
 	}
 }
