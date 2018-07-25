@@ -12,9 +12,18 @@ public class RestResponse<T> {
 		super();
 		this.header=new Header();
 	}
+	
+	public RestResponse(String code,String msg){
+		super();
+		this.header=new Header(code,msg);
+	}
 
 	public static <T> RestResponse<T> success(){
 		return new RestResponse<T>();
+	}
+	
+	public static <T> RestResponse<T> buildWithCodeMsg(String code,String msg){
+		return new RestResponse<T>(code,msg);
 	}
 
 	public Header getHeader() {

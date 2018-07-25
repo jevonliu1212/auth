@@ -13,7 +13,18 @@ public class Header {
 
 	private String code = CodeConstants.SUCCESS;
 	
-	private String message;
+	private String message ="success";
+
+	
+	public Header() {
+		super();
+	}
+
+	public Header(String code, String message) {
+		super();
+		this.code = code;
+		this.message = message;
+	}
 
 	public String getCode() {
 		return code;

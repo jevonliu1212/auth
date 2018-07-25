@@ -26,11 +26,11 @@ public class UserServiceImpl implements UserService {
 	@Resource
 	private UserMapper userMapper;
 	/**
-	 * ÓÃ»§×¢²á
+	 * ï¿½Ã»ï¿½×¢ï¿½ï¿½
 	 *
 	 * @param userRegisterBO
 	 * @author Jevon
-	 * @time 2018Äê7ÔÂ23ÈÕ
+	 * @time 2018ï¿½ï¿½7ï¿½ï¿½23ï¿½ï¿½
 	 */
 	public void register(UserRegisterBO userRegisterBO) {
 		User user = new User();
@@ -41,9 +41,10 @@ public class UserServiceImpl implements UserService {
 		user.setSalt(salt);
 		userMapper.insert(user);
 	}
+	
+	
 	public List<User> listUserByMobile(String mobile) {
-		// TODO Auto-generated method stub
-		return null;
+		return userMapper.listByMobile(mobile);
 	}
 
 }
