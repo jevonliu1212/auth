@@ -6,30 +6,30 @@ import com.v5.bean.bo.UserRegisterBO;
 import com.v5.entity.User;
 
 /**
- * userÒµÎñ²ã
+ * userä¸šåŠ¡å±‚
  *
  * @author Jevon
- * @time 2018Äê7ÔÂ23ÈÕ
+ * @time 2018å¹´7æœˆ23æ—¥
  * @copyright Jevon & Nate
  */
 public interface UserService {
 
 	/**
-	 * ÓÃ»§×¢²á
+	 * ç”¨æˆ·æ³¨å†Œ
 	 *
 	 * @param userRegisterBO
 	 * @author Jevon
-	 * @time 2018Äê7ÔÂ23ÈÕ
+	 * @time 2018å¹´7æœˆ23æ—¥
 	 */
 	void register(UserRegisterBO userRegisterBO);
 	
 	/**
-	 * ¸ù¾İÊÖ»úºÅ²éÑ¯ÓÃ»§¼¯ºÏ
+	 * æ ¹æ®æ‰‹æœºå·æŸ¥è¯¢ç”¨æˆ·
 	 *
 	 * @param mobile
 	 * @return
 	 * @author Jevon
-	 * @time 2018Äê7ÔÂ24ÈÕ
+	 * @time 2018å¹´7æœˆ24æ—¥
 	 */
 	List<User> listUserByMobile(String mobile);
 }

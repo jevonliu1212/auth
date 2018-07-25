@@ -26,11 +26,11 @@ public class UserServiceImpl implements UserService {
 	@Resource
 	private UserMapper userMapper;
 	/**
-	 * �û�ע��
+	 * 用户注册
 	 *
 	 * @param userRegisterBO
 	 * @author Jevon
-	 * @time 2018��7��23��
+	 * @time 2018年7月23日
 	 */
 	public void register(UserRegisterBO userRegisterBO) {
 		User user = new User();
@@ -42,7 +42,14 @@ public class UserServiceImpl implements UserService {
 		userMapper.insert(user);
 	}
 	
-	
+	/**
+	 * 根据手机号查询用户
+	 *
+	 * @param mobile
+	 * @return
+	 * @author Jevon
+	 * @time 2018年7月24日
+	 */
 	public List<User> listUserByMobile(String mobile) {
 		return userMapper.listByMobile(mobile);
 	}

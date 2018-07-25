@@ -1,12 +1,15 @@
 package com.v5.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,29 +22,35 @@ import com.v5.bean.bo.LoginBO;
 import com.v5.bean.bo.UserRegisterBO;
 import com.v5.bean.response.RestResponse;
 import com.v5.entity.User;
+import com.v5.redis.AuthRedisTemplate;
 import com.v5.service.UserService;
 import com.v5.utils.CookieUtils;
 
 /**
- * �û�Controller
+ * 用户Controller
  *
  * @author Jevon
- * @time 2018��7��23��
+ * @time 2018年7月23日
  * @copyright Jevon & Nate
  */
 @RestController
 @RequestMapping("/user")
 public class UserController {
 	
+	private final static Logger log = LoggerFactory.getLogger(UserController.class);
+	
 	@Resource
 	private UserService userService;
+	@Resource
+	private AuthRedisTemplate authRedisTemplate;
 
 	/**
-	 * �û�ע��
+	 * 用户注册
 	 *
 	 * @param userRegisterBO
+	 * @return
 	 * @author Jevon
-	 * @time 2018��7��23��
+	 * @time 2018年7月23日
 	 */
 	@RequestMapping(value = "/register",method = RequestMethod.POST)
 	public RestResponse register(@Validated @RequestBody UserRegisterBO userRegisterBO){
@@ -53,6 +62,16 @@ public class UserController {
 		return RestResponse.success();
 	}
 	
+	/**
+	 * 手机号和密码登录
+	 *
+	 * @param loginBO
+	 * @param request
+	 * @param response
+	 * @return
+	 * @author Jevon
+	 * @time 2018年7月25日
+	 */
 	@RequestMapping(value = "/login",method = RequestMethod.POST)
 	public RestResponse login(@Validated @RequestBody LoginBO loginBO,HttpServletRequest request, HttpServletResponse response){
 		List<User> userList = userService.listUserByMobile(loginBO.getMobile());
@@ -69,7 +88,12 @@ public class UserController {
 		if(!StringUtils.equals(pass, currentUser.getPassword())){
 			return RestResponse.buildWithCodeMsg("20000", "手机号或密码错误!");
 		}
-		CookieUtils.setCookie(response, "user-token", currentUser.getMobile(), 60);
+		
+		String token = DigestUtils.md5Hex(currentUser.getMobile()+UUID.randomUUID().toString());
+		log.info("user-token=========={}",token);
+		CookieUtils.setCookie(response, "user-token", token, 60);
+		authRedisTemplate.set("user-token-"+token, Long.toString(currentUser.getId()),60L);
+		log.info("user====id====={}",authRedisTemplate.get("user-token-"+token));
 		
 		return RestResponse.success();
 	}
