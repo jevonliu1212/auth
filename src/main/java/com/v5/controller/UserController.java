@@ -94,8 +94,8 @@ public class UserController {
 		//保存redis和cookies
 		String token = DigestUtils.md5Hex(currentUser.getMobile()+UUID.randomUUID().toString());
 		log.info("user-token=========={}",token);
-		CookieUtils.setCookie(response, "user-token", token, 60);
-		authRedisTemplate.set("user-token-"+token, Long.toString(currentUser.getId()),60L);
+		CookieUtils.setCookie(response, "user-token", token, 1800);
+		authRedisTemplate.set("user-token-"+token, Long.toString(currentUser.getId()),1800L);
 		log.info("user====id====={}",authRedisTemplate.get("user-token-"+token));
 		
 		return RestResponse.success();
