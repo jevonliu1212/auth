@@ -54,4 +54,9 @@ public class UserServiceImpl implements UserService {
 		return userMapper.listByMobile(mobile);
 	}
 
+	@Override
+	public User getUserById(Long id) {
+		return userMapper.getById(id);
+	}
+
 }

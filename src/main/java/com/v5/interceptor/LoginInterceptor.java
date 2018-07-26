@@ -10,7 +10,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.alibaba.fastjson.JSON;
+import com.v5.bean.response.RestResponse;
+import com.v5.entity.User;
 import com.v5.redis.AuthRedisTemplate;
+import com.v5.service.UserService;
+import com.v5.utils.ContextHolder;
 import com.v5.utils.CookieUtils;
 /**
  * 登录拦截器
@@ -23,15 +28,18 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
 	@Resource
 	private AuthRedisTemplate authRedisTemplate;
+	@Resource
+	private UserService userService;
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
+		authRedisTemplate.set("test", Long.toString(22L));
 		Cookie cookie =CookieUtils.getCookieByName(request, "user-token");
-		
+		response.setCharacterEncoding("UTF-8");
 		if(cookie==null){
 			PrintWriter writer = response.getWriter();
-			writer.print("请先登录!");
+			writer.print(JSON.toJSONString(RestResponse.buildWithCodeMsg("20000", "请先登录!")));
 			return false;
 		}
 		
@@ -39,10 +47,15 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		String userId = authRedisTemplate.get("user-token-"+token);
 		if(userId==null){
 			PrintWriter writer = response.getWriter();
-			writer.print("请先登录!");
+			writer.print(JSON.toJSONString(RestResponse.buildWithCodeMsg("20000", "请先登录!")));
 			return false;
 		}
-		
+		User currentUser = userService.getUserById(Long.parseLong(userId));
+		if(currentUser==null){
+			System.out.println("用户不存在");
+		}else{
+			ContextHolder.set(currentUser);
+		}
 		
 		return super.preHandle(request, response, handler);
 	}

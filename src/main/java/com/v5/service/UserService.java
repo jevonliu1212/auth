@@ -32,4 +32,6 @@ public interface UserService {
 	 * @time 2018年7月24日
 	 */
 	List<User> listUserByMobile(String mobile);
+	
+	User getUserById(Long id);
 }

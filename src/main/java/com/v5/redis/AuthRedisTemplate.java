@@ -1,5 +1,7 @@
 package com.v5.redis;
 
+import java.util.concurrent.TimeUnit;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -24,7 +26,7 @@ public class AuthRedisTemplate {
 	
 	public void set(String key,String value,long time){
 		ValueOperations<String, String> ops = stringRedisTemplate.opsForValue();
-		ops.set(key, value,time);
+		ops.set(key, value, time, TimeUnit.SECONDS);
 	}
 	
 	public String get(String key){

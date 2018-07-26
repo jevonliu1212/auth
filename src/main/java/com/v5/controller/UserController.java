@@ -18,12 +18,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.druid.util.StringUtils;
+import com.alibaba.fastjson.JSON;
 import com.v5.bean.bo.LoginBO;
 import com.v5.bean.bo.UserRegisterBO;
 import com.v5.bean.response.RestResponse;
 import com.v5.entity.User;
 import com.v5.redis.AuthRedisTemplate;
 import com.v5.service.UserService;
+import com.v5.utils.ContextHolder;
 import com.v5.utils.CookieUtils;
 
 /**
@@ -89,6 +91,7 @@ public class UserController {
 			return RestResponse.buildWithCodeMsg("20000", "手机号或密码错误!");
 		}
 		
+		//保存redis和cookies
 		String token = DigestUtils.md5Hex(currentUser.getMobile()+UUID.randomUUID().toString());
 		log.info("user-token=========={}",token);
 		CookieUtils.setCookie(response, "user-token", token, 60);
@@ -100,6 +103,7 @@ public class UserController {
 	
 	@RequestMapping(value = "/qqlogin",method = RequestMethod.GET)
 	public RestResponse qqlogin(){
+		log.info("user info========{}",JSON.toJSONString(ContextHolder.get()));
 		System.out.println("qq login........");
 		return RestResponse.success();
 	}
