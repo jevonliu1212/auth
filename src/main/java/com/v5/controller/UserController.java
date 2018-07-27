@@ -20,9 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSON;
 import com.v5.bean.bo.LoginBO;
+import com.v5.bean.bo.LoginByMsgCodeBO;
 import com.v5.bean.bo.SendMsgCodeBO;
 import com.v5.bean.bo.UserRegisterBO;
 import com.v5.bean.response.RestResponse;
+import com.v5.constant.Constants;
 import com.v5.entity.User;
 import com.v5.redis.AuthRedisTemplate;
 import com.v5.service.UserService;
@@ -76,7 +78,7 @@ public class UserController {
 	 * @time 2018年7月25日
 	 */
 	@RequestMapping(value = "/nl/login",method = RequestMethod.POST)
-	public RestResponse login(@Validated @RequestBody LoginBO loginBO,HttpServletRequest request, HttpServletResponse response){
+	public RestResponse login(@Validated @RequestBody LoginBO loginBO, HttpServletResponse response){
 		List<User> userList = userService.listUserByMobile(loginBO.getMobile());
 		if(CollectionUtils.isEmpty(userList)){
 			return RestResponse.buildWithCodeMsg("20000", "手机号或密码错误!");
@@ -96,8 +98,7 @@ public class UserController {
 		String token = DigestUtils.md5Hex(currentUser.getMobile()+UUID.randomUUID().toString());
 		log.info("user-token=========={}",token);
 		CookieUtils.setCookie(response, "user-token", token, 1800);
-		authRedisTemplate.set("user-token-"+token, Long.toString(currentUser.getId()),1800L);
-		log.info("user====id====={}",authRedisTemplate.get("user-token-"+token));
+		authRedisTemplate.set(Constants.USER_TOKEN_KEY+token, Long.toString(currentUser.getId()),1800L);
 		
 		return RestResponse.success();
 	}
@@ -117,11 +118,35 @@ public class UserController {
 			return response;
 		}
 		//发送redis
-		authRedisTemplate.set("msg-code-"+sendMsgCodeBO.getMobile(), response.getBody(),60L);
+		authRedisTemplate.set(Constants.MSG_CODE_KEY+sendMsgCodeBO.getMobile(), response.getBody(),600L);
 		return RestResponse.success();
 	}
 	
-	
+	@RequestMapping(value = "/nl/loginWithCode",method = RequestMethod.POST)
+	public RestResponse login(@Validated @RequestBody LoginByMsgCodeBO loginByMsgCodeBO, HttpServletResponse response){
+		List<User> userList = userService.listUserByMobile(loginByMsgCodeBO.getMobile());
+		if(CollectionUtils.isEmpty(userList)){
+			return RestResponse.buildWithCodeMsg("20000", "用户不存在");
+		}
+		
+		if(userList.size()>1){
+			return RestResponse.buildWithCodeMsg("30000", "用户数据异常!");
+		}
+		
+		String code = authRedisTemplate.get(Constants.MSG_CODE_KEY+loginByMsgCodeBO.getMobile());
+		if(!StringUtils.equals(loginByMsgCodeBO.getMsgCode(), code)){
+			return RestResponse.buildWithCodeMsg("20000", "验证码错误!");
+		}
+		
+		User currentUser = userList.get(0);
+		
+		// 保存redis和cookies
+		String token = DigestUtils.md5Hex(currentUser.getMobile() + UUID.randomUUID().toString());
+		log.info("user-token=========={}", token);
+		CookieUtils.setCookie(response, "user-token", token, 1800);
+		authRedisTemplate.set(Constants.USER_TOKEN_KEY + token, Long.toString(currentUser.getId()), 1800L);
+		return RestResponse.success();
+	}
 	
 	@RequestMapping(value = "/qqlogin",method = RequestMethod.GET)
 	public RestResponse qqlogin(){

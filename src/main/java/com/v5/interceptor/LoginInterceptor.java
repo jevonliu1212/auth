@@ -12,6 +12,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.alibaba.fastjson.JSON;
 import com.v5.bean.response.RestResponse;
+import com.v5.constant.Constants;
 import com.v5.entity.User;
 import com.v5.redis.AuthRedisTemplate;
 import com.v5.service.UserService;
@@ -44,7 +45,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		}
 		
 		String token = cookie.getValue();
-		String userId = authRedisTemplate.get("user-token-"+token);
+		String userId = authRedisTemplate.get(Constants.USER_TOKEN_KEY+token);
 		if(userId==null){
 			PrintWriter writer = response.getWriter();
 			writer.print(JSON.toJSONString(RestResponse.buildWithCodeMsg("20000", "请先登录!")));
