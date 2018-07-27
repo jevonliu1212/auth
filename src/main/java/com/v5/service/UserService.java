@@ -3,6 +3,7 @@ package com.v5.service;
 import java.util.List;
 
 import com.v5.bean.bo.UserRegisterBO;
+import com.v5.bean.response.RestResponse;
 import com.v5.entity.User;
 
 /**
@@ -34,4 +35,6 @@ public interface UserService {
 	List<User> listUserByMobile(String mobile);
 	
 	User getUserById(Long id);
+	
+	RestResponse<String> sendMsgCode(String mobile);
 }

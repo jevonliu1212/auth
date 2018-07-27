@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSON;
 import com.v5.bean.bo.LoginBO;
+import com.v5.bean.bo.SendMsgCodeBO;
 import com.v5.bean.bo.UserRegisterBO;
 import com.v5.bean.response.RestResponse;
 import com.v5.entity.User;
@@ -54,7 +55,7 @@ public class UserController {
 	 * @author Jevon
 	 * @time 2018年7月23日
 	 */
-	@RequestMapping(value = "/register",method = RequestMethod.POST)
+	@RequestMapping(value = "/nl/register",method = RequestMethod.POST)
 	public RestResponse register(@Validated @RequestBody UserRegisterBO userRegisterBO){
 		List<User> userList = userService.listUserByMobile(userRegisterBO.getMobile());
 		if(!CollectionUtils.isEmpty(userList)){
@@ -74,7 +75,7 @@ public class UserController {
 	 * @author Jevon
 	 * @time 2018年7月25日
 	 */
-	@RequestMapping(value = "/login",method = RequestMethod.POST)
+	@RequestMapping(value = "/nl/login",method = RequestMethod.POST)
 	public RestResponse login(@Validated @RequestBody LoginBO loginBO,HttpServletRequest request, HttpServletResponse response){
 		List<User> userList = userService.listUserByMobile(loginBO.getMobile());
 		if(CollectionUtils.isEmpty(userList)){
@@ -100,6 +101,27 @@ public class UserController {
 		
 		return RestResponse.success();
 	}
+	
+	@RequestMapping(value = "/nl/sendMsgCode",method = RequestMethod.POST)
+	public RestResponse sendMsgCode(@Validated @RequestBody SendMsgCodeBO sendMsgCodeBO){
+		List<User> userList = userService.listUserByMobile(sendMsgCodeBO.getMobile());
+		if(CollectionUtils.isEmpty(userList)){
+			return RestResponse.buildWithCodeMsg("20000", "用户不存在");
+		}
+		
+		if(userList.size()>1){
+			return RestResponse.buildWithCodeMsg("30000", "用户数据异常!");
+		}
+		RestResponse<String> response = userService.sendMsgCode(sendMsgCodeBO.getMobile());
+		if(response.isNotSuccess()){
+			return response;
+		}
+		//发送redis
+		authRedisTemplate.set("msg-code-"+sendMsgCodeBO.getMobile(), response.getBody(),60L);
+		return RestResponse.success();
+	}
+	
+	
 	
 	@RequestMapping(value = "/qqlogin",method = RequestMethod.GET)
 	public RestResponse qqlogin(){

@@ -72,6 +72,13 @@
 			<artifactId>commons-codec</artifactId>
 			<version>1.11</version>
 		</dependency>
+		
+		<!-- 腾讯短信 -->
+		<dependency>
+		  <groupId>com.github.qcloudsms</groupId>
+		  <artifactId>qcloudsms</artifactId>
+		  <version>1.0.5</version>
+		</dependency>
   </dependencies>
   <build>
     <finalName>auth</finalName>
