@@ -76,10 +76,14 @@ public class UserServiceImpl implements UserService {
 	public RestResponse<String> sendMsgCode(String mobile) {
 		String code=this.getRandNum(6);
 		try {
+			int appid=Integer.parseInt(qCloudMsgConfig.getAppid());
+			int templateId=Integer.parseInt(qCloudMsgConfig.getTemplate());
+//			String sign = qCloudMsgConfig.getSign();
+//			sign = new String(sign.getBytes(),"utf-8");
 		    String[] params = {code,"1"};
 		    String[] phoneNumbers = {mobile};
-		    SmsMultiSender msender = new SmsMultiSender(Integer.parseInt(qCloudMsgConfig.getAppid()), qCloudMsgConfig.getAppkey());
-		    SmsMultiSenderResult result =  msender.sendWithParam("86", phoneNumbers,Integer.parseInt(qCloudMsgConfig.getTemplate()), params, qCloudMsgConfig.getSign(), "", "");  // 签名参数未提供或者为空时，会使用默认签名发送短信
+		    SmsMultiSender msender = new SmsMultiSender(appid, qCloudMsgConfig.getAppkey());
+		    SmsMultiSenderResult result =  msender.sendWithParam("86", phoneNumbers,templateId, params, "", "", "");  // 签名参数未提供或者为空时，会使用默认签名发送短信
 		    System.out.println(result);
 		    int res = result.result;
 		    //发送失败
