@@ -1,6 +1,7 @@
 package com.v5.bean.response;
 
 import com.alibaba.druid.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.v5.constant.CodeConstants;
 
 public class RestResponse<T> {
@@ -63,6 +64,7 @@ public class RestResponse<T> {
 		return this.header.getCode();
 	}
 	
+	@JsonIgnore
 	public boolean isSuccess(){
 		if(StringUtils.equals(this.fetchCode(), CodeConstants.SUCCESS)){
 			return true;
@@ -70,6 +72,7 @@ public class RestResponse<T> {
 		return false;
 	}
 	
+	@JsonIgnore
 	public boolean isNotSuccess(){
 		return !this.isSuccess();
 	}
