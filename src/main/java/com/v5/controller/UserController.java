@@ -148,10 +148,31 @@ public class UserController {
 		return RestResponse.success();
 	}
 	
-	@RequestMapping(value = "/qqlogin",method = RequestMethod.GET)
+	@RequestMapping(value = "/nl/qqlogin",method = RequestMethod.GET)
 	public RestResponse qqlogin(){
-		log.info("user info========{}",JSON.toJSONString(ContextHolder.get()));
-		System.out.println("qq login........");
+		String lockKey = "lock";
+		String lockValue = UUID.randomUUID().toString();
+		String result = authRedisTemplate.lock(lockKey,lockValue);
+		//null表示已被锁住，ok表示拿到锁
+		if(result==null){
+			return RestResponse.buildWithCodeMsg("20000", "获取锁失败");
+		}
+		System.out.println("qq login........"+result+",value="+lockValue);
+		
+		try {
+			Thread.sleep(30000L);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//System.out.println("del lock........");
+		//authRedisTemplate.del(lockKey);
+		Long unlockResult =  authRedisTemplate.unlock(lockKey, lockValue);
+		log.info("unlockResult=========={}", unlockResult);
+		if(unlockResult==0L){
+			return RestResponse.buildWithCodeMsg("20000", "释放锁失败");
+		}
+		log.info("释放完毕");
 		return RestResponse.success();
 	}
 }
