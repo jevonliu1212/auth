@@ -11,6 +11,8 @@ import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisCommands;
@@ -77,6 +79,25 @@ public class AuthRedisTemplate {
 			}
 			
 		});
+		return result;
+	}
+	
+	public Long lpush(String quene,String msg){
+		return stringRedisTemplate.opsForList().leftPush(quene, msg);
+	}
+	
+	public String brpop(String quene){
+		String result = stringRedisTemplate.execute(new RedisCallback<String>(){
+				@Override
+				public String doInRedis(RedisConnection arg0) throws DataAccessException {
+					List<byte[]>  list = arg0.bRPop(5, quene.getBytes());
+					if(CollectionUtils.isEmpty(list)){
+						return null;
+					}
+					return new String(list.get(1));
+				}
+				
+			});
 		return result;
 	}
 }
