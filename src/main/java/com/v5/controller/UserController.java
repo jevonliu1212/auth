@@ -27,6 +27,7 @@ import com.v5.bean.response.RestResponse;
 import com.v5.constant.Constants;
 import com.v5.entity.User;
 import com.v5.redis.AuthRedisTemplate;
+import com.v5.service.MyUserDetailsService;
 import com.v5.service.UserService;
 import com.v5.utils.CookieUtils;
 
@@ -47,7 +48,8 @@ public class UserController {
 	private UserService userService;
 	@Resource
 	private AuthRedisTemplate authRedisTemplate;
-
+	@Resource
+	private MyUserDetailsService userDetailsService;
 	/**
 	 * 用户注册
 	 *
@@ -153,28 +155,9 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/nl/userlogin",method = RequestMethod.POST)
-	public RestResponse userlogin(LoginBO loginBO, HttpServletResponse response){
-		List<User> userList = userService.listUserByMobile(loginBO.getMobile());
-		if(CollectionUtils.isEmpty(userList)){
-			return RestResponse.buildWithCodeMsg("20000", "手机号或密码错误!");
-		}
-		
-		if(userList.size()>1){
-			return RestResponse.buildWithCodeMsg("30000", "用户数据异常!");
-		}
-		
-		User currentUser = userList.get(0);
-		String pass = DigestUtils.sha256Hex(DigestUtils.sha256Hex(loginBO.getPassword()) + currentUser.getSalt());
-		if(!StringUtils.equals(pass, currentUser.getPassword())){
-			return RestResponse.buildWithCodeMsg("20000", "手机号或密码错误!");
-		}
-		
-		//保存redis和cookies
-		String token = DigestUtils.md5Hex(currentUser.getMobile()+UUID.randomUUID().toString());
-		log.info("user-token=========={}",token);
-		CookieUtils.setCookie(response, "user-token", token, 1800);
-		authRedisTemplate.set(Constants.USER_TOKEN_KEY+token, Long.toString(currentUser.getId()),1800L);
-		
-		return RestResponse.success();
+	public String userlogin(LoginBO loginBO, HttpServletResponse response){
+		System.out.println("login...................");
+		userDetailsService.loadUserByUsername(loginBO.getMobile());
+		return "welcome";
 	}
 }

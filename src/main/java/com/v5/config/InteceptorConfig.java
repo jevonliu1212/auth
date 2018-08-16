@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import com.v5.interceptor.LoginInterceptor;
 
 
-@Configuration
+//@Configuration
 public class InteceptorConfig extends WebMvcConfigurerAdapter{
 
 	@Bean
