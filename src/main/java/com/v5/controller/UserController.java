@@ -28,7 +28,6 @@ import com.v5.constant.Constants;
 import com.v5.entity.User;
 import com.v5.redis.AuthRedisTemplate;
 import com.v5.service.UserService;
-import com.v5.utils.ContextHolder;
 import com.v5.utils.CookieUtils;
 
 /**
@@ -148,10 +147,8 @@ public class UserController {
 		return RestResponse.success();
 	}
 	
-	@RequestMapping(value = "/qqlogin",method = RequestMethod.GET)
+	@RequestMapping(value = "/nl/qqlogin",method = RequestMethod.GET)
 	public RestResponse qqlogin(){
-		log.info("user info========{}",JSON.toJSONString(ContextHolder.get()));
-		System.out.println("qq login........");
 		return RestResponse.success();
 	}
 	

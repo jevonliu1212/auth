@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.v5</groupId>
   <artifactId>auth</artifactId>
-  <packaging>war</packaging>
+  <packaging>jar</packaging>
   <version>0.0.1-SNAPSHOT</version>
   <name>auth Maven Webapp</name>
   <url>http://maven.apache.org</url>
@@ -85,7 +85,13 @@
 		  <artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
   </dependencies>
-  <build>
-    <finalName>auth</finalName>
-  </build>
+ 
+<build>
+  <plugins>
+  	<plugin>
+  		<groupId>org.springframework.boot</groupId>
+ 		<artifactId>spring-boot-maven-plugin</artifactId>
+  	</plugin>
+  </plugins>
+ </build>
 </project>
