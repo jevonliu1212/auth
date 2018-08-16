@@ -35,7 +35,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		authRedisTemplate.set("test", Long.toString(22L));
 		Cookie cookie =CookieUtils.getCookieByName(request, "user-token");
 		response.setCharacterEncoding("UTF-8");
 		if(cookie==null){
