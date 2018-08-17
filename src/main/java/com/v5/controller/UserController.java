@@ -24,6 +24,7 @@ import com.v5.bean.bo.LoginByMsgCodeBO;
 import com.v5.bean.bo.SendMsgCodeBO;
 import com.v5.bean.bo.UserRegisterBO;
 import com.v5.bean.response.RestResponse;
+import com.v5.bean.security.SecurityLoginBO;
 import com.v5.constant.Constants;
 import com.v5.entity.User;
 import com.v5.redis.AuthRedisTemplate;
@@ -155,9 +156,10 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/nl/userlogin",method = RequestMethod.POST)
-	public String userlogin(LoginBO loginBO, HttpServletResponse response){
+	public String userlogin(SecurityLoginBO securityLoginBO, HttpServletResponse response){
 		System.out.println("login...................");
-		userDetailsService.loadUserByUsername(loginBO.getMobile());
+		userDetailsService.loadUserByUsername(securityLoginBO.getUsername());
 		return "welcome";
 	}
+	
 }
