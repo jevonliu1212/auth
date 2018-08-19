@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,7 +40,8 @@ import com.v5.utils.CookieUtils;
  * @time 2018年7月23日
  * @copyright Jevon & Nate
  */
-@RestController
+//@RestController
+@Controller
 @RequestMapping("/user")
 public class UserController {
 	
@@ -155,11 +157,11 @@ public class UserController {
 		return RestResponse.success();
 	}
 	
-	@RequestMapping(value = "/nl/userlogin",method = RequestMethod.POST)
+	@RequestMapping(value = "/userlogin",method = RequestMethod.GET)
 	public String userlogin(SecurityLoginBO securityLoginBO, HttpServletResponse response){
 		System.out.println("login...................");
-		userDetailsService.loadUserByUsername(securityLoginBO.getUsername());
-		return "welcome";
+//		userDetailsService.loadUserByUsername(securityLoginBO.getUsername());
+		return "userlogin";
 	}
 	
 }
