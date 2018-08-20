@@ -1,10 +1,14 @@
 package com.v5.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -24,7 +28,9 @@ public class MyUserDetailsService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		log.info("用户名是：{}",username);
-		User user = new User(username,passwordEncoder.encode("1234"),AuthorityUtils.commaSeparatedStringToAuthorityList("admin"));
+		List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+	//	authorities.add(new SimpleGrantedAuthority("REDIS"));
+		User user = new User(username,"1234",authorities);
 		return user;
 	}
 
