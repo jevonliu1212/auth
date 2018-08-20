@@ -2,6 +2,7 @@ package com.v5.security;
 
 import java.io.IOException;
 
+import javax.annotation.Resource;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -26,7 +27,7 @@ public class MyFilterSecurityInterceptor extends AbstractSecurityInterceptor imp
 	@Autowired
     private FilterInvocationSecurityMetadataSource securityMetadataSource;
 	
-	@Autowired
+	@Resource
     public void setMyAccessDecisionManager(MyAccessDecisionManager myAccessDecisionManager) {
         super.setAccessDecisionManager(myAccessDecisionManager);
     }

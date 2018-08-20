@@ -23,17 +23,23 @@ public class MyInvocationSecurityMetadataSourceService implements FilterInvocati
 	
 	private HashMap<String, Collection<ConfigAttribute>> map =null;
 	
+	/**
+     * 加载权限表中所有权限
+     */
 	public void loadResourceDefine(){
 		map = new HashMap<>();
         Collection<ConfigAttribute> array = new ArrayList<>();
-        array.add(new SecurityConfig("REDIS"));
+        array.add(new SecurityConfig("ADMIN"));
         Collection<ConfigAttribute> array1 = new ArrayList<>();
-        array1.add(new SecurityConfig("USER"));
+        array1.add(new SecurityConfig("ROLE_USER"));
+        Collection<ConfigAttribute> array2 = new ArrayList<>();
+        array2.add(new SecurityConfig("Test"));
         map.put("/user/**", array);
         map.put("/redis/**", array1);
-        
+        map.put("/", array);
 	}
 	
+	//此方法是为了判定用户请求的url 是否在权限表中，如果在权限表中，则返回给 decide 方法，用来判定用户是否有此权限。如果不在权限表中则放行。
 	@Override
 	public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
 		log.info("getAttributes================");
@@ -46,6 +52,7 @@ public class MyInvocationSecurityMetadataSourceService implements FilterInvocati
             resUrl = iter.next();
             matcher = new AntPathRequestMatcher(resUrl);
             if(matcher.matches(request)) {
+            	log.info("getAttributes======matches=========={}",map.get(resUrl));
                 return map.get(resUrl);
             }
         }

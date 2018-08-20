@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" 
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
-<meta content="text/html;charset=gbk"/>
+<meta content="text/html;charset=UTF-8"/>
 <title sec:authentication="name"></title>
 <link rel="stylesheet" th:href="@{css/bootstrap.min.css}" />
 <style type="text/css">
@@ -19,11 +19,11 @@ body {
      <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand" href="#">Spring Security演示</a>
+          <a class="navbar-brand" href="#">Spring Security婕旂ず</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-           <li><a th:href="@{/}"> 首页 </a></li>
+           <li><a th:href="@{/}"> 棣栭〉 </a></li>
               <li><a th:href="@{/admin}"> admin </a></li>
           </ul>
         </div><!--/.nav-collapse -->
@@ -38,15 +38,15 @@ body {
 
         <p class="bg-primary" th:text="${msg.content}"></p>
 
-        <div sec:authorize="hasRole('ROLE_HOME')"> <!-- 用户类型为ROLE_ADMIN 显示 -->
+        <div sec:authorize="hasRole('ROLE_HOME')"> <!-- 鐢ㄦ埛绫诲瀷涓篟OLE_ADMIN 鏄剧ず -->
             <p class="bg-info" th:text="${msg.etraInfo}"></p>
         </div>
-          <div sec:authorize="hasRole('ROLE_ADMIN')"> <!-- 用户类型为ROLE_ADMIN 显示 -->
-              <p class="bg-info">恭喜您,您有 ROLE_ADMIN 权限 </p>
+          <div sec:authorize="hasRole('ROLE_ADMIN')"> <!-- 鐢ㄦ埛绫诲瀷涓篟OLE_ADMIN 鏄剧ず -->
+              <p class="bg-info">鎭枩鎮�,鎮ㄦ湁 ROLE_ADMIN 鏉冮檺 </p>
           </div>
-
+		    
           <form th:action="@{/logout}" method="post">
-            <input type="submit" class="btn btn-primary" value="注销"/>
+            <input type="submit" class="btn btn-primary" value="娉ㄩ攢"/>
         </form>
       </div>
 
