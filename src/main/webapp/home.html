@@ -38,13 +38,13 @@ body {
 
         <p class="bg-primary" th:text="${msg.content}"></p>
 
-        <div sec:authorize="hasRole('ROLE_HOME')"> <!-- 用户类型为ROLE_ADMIN 显示 -->
+        <div sec:authorize="hasRole('ROLE_USER')"> <!-- 用户类型为ROLE_ADMIN 显示 -->
             <p class="bg-info" th:text="${msg.etraInfo}"></p>
         </div>
-          <div sec:authorize="hasRole('ROLE_ADMIN')"> <!-- 用户类型为ROLE_ADMIN 显示 -->
+          <div sec:authorize="hasAuthority('ADMIN')"> <!-- 用户类型为ROLE_ADMIN 显示 -->
               <p class="bg-info">恭喜您,您有 ROLE_ADMIN 权限 </p>
           </div>
-           <sec:authorize access="hasAuthority('ADMIN1')">
+           <sec:authorize ifAnyGranted="ROLE_ADMIN">
 				you are an admin!
 				</sec:authorize>
           <form th:action="@{/logout}" method="post">
