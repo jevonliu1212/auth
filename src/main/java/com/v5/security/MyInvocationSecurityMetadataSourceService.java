@@ -36,7 +36,7 @@ public class MyInvocationSecurityMetadataSourceService implements FilterInvocati
         array2.add(new SecurityConfig("Test"));
         map.put("/user/**", array);
         map.put("/redis/**", array1);
-        map.put("/", array1);
+        map.put("/", array);
 	}
 	
 	//此方法是为了判定用户请求的url 是否在权限表中，如果在权限表中，则返回给 decide 方法，用来判定用户是否有此权限。如果不在权限表中则放行。

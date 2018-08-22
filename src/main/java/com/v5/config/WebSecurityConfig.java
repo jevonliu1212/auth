@@ -7,6 +7,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,6 +28,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new MyUserDetailsService();
     }
      
+     @Bean
+     public SessionRegistry getSessionRegistry(){
+         SessionRegistry sessionRegistry=new SessionRegistryImpl();
+         return sessionRegistry;
+     }
      
 	
 	@Override
@@ -51,7 +58,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .and()
         .logout().permitAll()
         .and()//注销行为任意访问
-        .csrf().disable();          // 关闭csrf防护
+        .csrf().disable()
+        .sessionManagement().maximumSessions(1).sessionRegistry(getSessionRegistry());          // 关闭csrf防护
 		
 		 http.addFilterBefore(myFilterSecurityInterceptor, FilterSecurityInterceptor.class);
 	}
