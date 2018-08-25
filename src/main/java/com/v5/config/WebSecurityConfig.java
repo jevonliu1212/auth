@@ -59,7 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .logout().permitAll()
         .and()//注销行为任意访问
         .csrf().disable()
-        .sessionManagement().maximumSessions(1).sessionRegistry(getSessionRegistry());          // 关闭csrf防护
+        .sessionManagement().maximumSessions(1).maxSessionsPreventsLogin(false).sessionRegistry(getSessionRegistry());          // 关闭csrf防护
 		
 		 http.addFilterBefore(myFilterSecurityInterceptor, FilterSecurityInterceptor.class);
 	}

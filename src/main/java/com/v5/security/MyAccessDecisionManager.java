@@ -24,7 +24,6 @@ public class MyAccessDecisionManager implements AccessDecisionManager {
 	@Override
 	public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes)
 			throws AccessDeniedException, InsufficientAuthenticationException {
-		log.info("role.......111.......{}",configAttributes);
 		if(null== configAttributes || configAttributes.size() <=0) {
             return;
         }
@@ -36,7 +35,6 @@ public class MyAccessDecisionManager implements AccessDecisionManager {
             needRole = c.getAttribute();
             log.info("role..............{}",needRole);
             for(GrantedAuthority ga : authentication.getAuthorities()) {//authentication 为在注释1 中循环添加到 GrantedAuthority 对象中的权限信息集合
-                log.info("GrantedAuthority......{}",ga.getAuthority());
             	if(needRole.trim().equals(ga.getAuthority())) {
                 	log.info("role.......match.......");
                     return;
