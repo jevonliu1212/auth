@@ -2,6 +2,9 @@ package com.v5.service;
 
 import java.util.List;
 
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
+
 import com.v5.bean.bo.UserRegisterBO;
 import com.v5.bean.response.RestResponse;
 import com.v5.entity.User;
@@ -37,4 +40,7 @@ public interface UserService {
 	User getUserById(Long id);
 	
 	RestResponse<String> sendMsgCode(String mobile);
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")  
+	void test();
 }

@@ -35,7 +35,7 @@ public class MyUserDetailsService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		log.info("用户名是：{}",username);
 		List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-		authorities.add(new SimpleGrantedAuthority("ADMIN"));
+		authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN1"));
 		User user = new User(username,"1234",authorities);
 		return user;
 	}

@@ -161,6 +161,7 @@ public class UserController {
 	public String userlogin(SecurityLoginBO securityLoginBO, HttpServletResponse response){
 		System.out.println("login...................");
 //		userDetailsService.loadUserByUsername(securityLoginBO.getUsername());
+		userService.test();
 		return "userlogin";
 	}
 	

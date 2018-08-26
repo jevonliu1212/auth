@@ -111,4 +111,10 @@ public class UserServiceImpl implements UserService {
         Random r = new Random();
         return from + r.nextInt(to - from);
     }
+
+	@Override
+	public void test() {
+		// TODO Auto-generated method stub
+		System.out.println("test..............");
+	}
 }

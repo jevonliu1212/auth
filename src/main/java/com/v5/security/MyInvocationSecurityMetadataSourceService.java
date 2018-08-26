@@ -29,7 +29,8 @@ public class MyInvocationSecurityMetadataSourceService implements FilterInvocati
 	public void loadResourceDefine(){
 		map = new HashMap<>();
         Collection<ConfigAttribute> array = new ArrayList<>();
-        array.add(new SecurityConfig("ADMIN"));
+        array.add(new SecurityConfig("ROLE_ADMIN"));
+        array.add(new SecurityConfig("ROLE_ADMIN1"));
         Collection<ConfigAttribute> array1 = new ArrayList<>();
         array1.add(new SecurityConfig("ROLE_USER"));
         Collection<ConfigAttribute> array2 = new ArrayList<>();
