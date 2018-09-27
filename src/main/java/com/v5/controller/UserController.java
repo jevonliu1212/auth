@@ -25,11 +25,9 @@ import com.v5.bean.bo.LoginByMsgCodeBO;
 import com.v5.bean.bo.SendMsgCodeBO;
 import com.v5.bean.bo.UserRegisterBO;
 import com.v5.bean.response.RestResponse;
-import com.v5.bean.security.SecurityLoginBO;
 import com.v5.constant.Constants;
 import com.v5.entity.User;
 import com.v5.redis.AuthRedisTemplate;
-import com.v5.service.MyUserDetailsService;
 import com.v5.service.UserService;
 import com.v5.utils.CookieUtils;
 
@@ -51,8 +49,6 @@ public class UserController {
 	private UserService userService;
 	@Resource
 	private AuthRedisTemplate authRedisTemplate;
-	@Resource
-	private MyUserDetailsService userDetailsService;
 	/**
 	 * 用户注册
 	 *
@@ -157,12 +153,5 @@ public class UserController {
 		return RestResponse.success();
 	}
 	
-	@RequestMapping(value = "/userlogin",method = RequestMethod.GET)
-	public String userlogin(SecurityLoginBO securityLoginBO, HttpServletResponse response){
-		System.out.println("login...................");
-//		userDetailsService.loadUserByUsername(securityLoginBO.getUsername());
-		userService.test();
-		return "userlogin";
-	}
 	
 }

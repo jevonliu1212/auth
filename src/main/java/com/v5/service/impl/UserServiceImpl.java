@@ -64,12 +64,13 @@ public class UserServiceImpl implements UserService {
 	 * @time 2018年7月24日
 	 */
 	public List<User> listUserByMobile(String mobile) {
-		return userMapper.listByMobile(mobile);
+		//return userMapper.listByMobile(mobile);
+		return null;
 	}
 
 	@Override
 	public User getUserById(Long id) {
-		return userMapper.getById(id);
+		return userMapper.selectByPrimaryKey(id);
 	}
 
 	@Override
@@ -112,9 +113,4 @@ public class UserServiceImpl implements UserService {
         return from + r.nextInt(to - from);
     }
 
-	@Override
-	public void test() {
-		// TODO Auto-generated method stub
-		System.out.println("test..............");
-	}
 }

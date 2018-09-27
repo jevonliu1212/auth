@@ -1,95 +1,83 @@
 package com.v5.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
-/**
- * 用户实体类
- *
- * @author Jevon
- * @time 2018年7月22日
- * @copyright Jevon & Nate
- */
-@Entity
 public class User {
+    private Long id;
 
-	@Id
-	@GeneratedValue
-	private Long id;
+    private String userName;
 
-	/**
-	 * 用户名
-	 */
-	private String userName;
+    private String password;
 
-	/**
-	 * 密码
-	 */
-	private String password;
+    private String salt;
 
-	/**
-	 * 邮箱
-	 */
-	private String email;
-	
-	/**
-	 * 手机号
-	 */
-	private String mobile;
+    private String mobile;
 
-	/**
-	 * 加盐
-	 */
-	private String salt;
+    private Short deleteFlag;
 
-	public Long getId() {
-		return id;
-	}
+    private Short status;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    private String remark;
 
-	public String getUserName() {
-		return userName;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public String getUserName() {
+        return userName;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setUserName(String userName) {
+        this.userName = userName == null ? null : userName.trim();
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setPassword(String password) {
+        this.password = password == null ? null : password.trim();
+    }
 
-	public String getSalt() {
-		return salt;
-	}
+    public String getSalt() {
+        return salt;
+    }
 
-	public void setSalt(String salt) {
-		this.salt = salt;
-	}
+    public void setSalt(String salt) {
+        this.salt = salt == null ? null : salt.trim();
+    }
 
-	public String getMobile() {
-		return mobile;
-	}
+    public String getMobile() {
+        return mobile;
+    }
 
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
-	}
+    public void setMobile(String mobile) {
+        this.mobile = mobile == null ? null : mobile.trim();
+    }
 
-	
+    public Short getDeleteFlag() {
+        return deleteFlag;
+    }
+
+    public void setDeleteFlag(Short deleteFlag) {
+        this.deleteFlag = deleteFlag;
+    }
+
+    public Short getStatus() {
+        return status;
+    }
+
+    public void setStatus(Short status) {
+        this.status = status;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark == null ? null : remark.trim();
+    }
 }
