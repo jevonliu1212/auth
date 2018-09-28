@@ -5,6 +5,24 @@ public class CodeConstants {
 	/** 成功 */
     public final static String SUCCESS = "10000";
     
-    /**失败 */
-    public final static String ERROR = "20000";
+    /**
+     * 业务错误
+     */
+    public final static String BUSINESS_ERROR = "10001";
+    
+    
+    /**
+     * 参数错误
+     */
+    public final static String ECXEPTION = "20000";
+    
+    /**
+     * 参数错误
+     */
+    public final static String ECXEPTION_PARAM = "20001";
+    
+    /**
+     * 参数类型错误
+     */
+    public final static String ECXEPTION_PARAM_TRANSFER = "20002";
 }

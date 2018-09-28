@@ -38,8 +38,7 @@ import com.v5.utils.CookieUtils;
  * @time 2018年7月23日
  * @copyright Jevon & Nate
  */
-//@RestController
-@Controller
+@RestController
 @RequestMapping("/user")
 public class UserController {
 	

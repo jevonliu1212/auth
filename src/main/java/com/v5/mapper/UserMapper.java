@@ -1,7 +1,9 @@
 package com.v5.mapper;
 
-import com.v5.entity.User;
+import org.apache.ibatis.annotations.Mapper;
 
+import com.v5.entity.User;
+@Mapper
 public interface UserMapper {
     int deleteByPrimaryKey(Long id);
 
